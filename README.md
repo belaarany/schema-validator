@@ -13,10 +13,13 @@ var schemaValidator = require("goabela-schema-validator")
 ```
 
 ### schemaValidator.validate()
-The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body or the payload as a object and the schema object.
+The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
-First you have to create the schema file such as `schema.json`. Then in the NodeJS file under the Express controller, you can call the `validate` method and pass the `body` (e.g. `req.body`) object. See the prototype below.
+First you have to create a schema object. A good solution could be that creating a schema file such as `schema.json`.
 
+After that in the NodeJS file (e.g. under the Express controller), you can call the `validate` method with the schema and the body object.
+
+The prototype of the method:
 ```js
 schemaValidator.validate({schema}, {body})
   .then(() => {
