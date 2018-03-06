@@ -37,6 +37,8 @@ The `err` variable will contain an object with all the errors that the body has.
 
 _For a full example please check the [example section](example)._
 
+## Schema structure
+
 ## Errors
 
 ## Example
