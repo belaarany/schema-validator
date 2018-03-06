@@ -8,12 +8,12 @@ Install it by using the `npm install` command in the node shell:
 $ npm install goabela-schema-validator --save
 ```
 
-## API
 Import the module in your `.js` file:
 ```js
 var schemaValidator = require("goabela-schema-validator")
-```
 
+```
+## Features
 ### schemaValidator.validate()
 The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
