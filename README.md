@@ -9,7 +9,7 @@ Install it by using the `npm install` command in the node shell:
 $ npm install goabela-schema-validator --save
 ```
 \
-Import the module in your .js file:
+Import the module in your `.js` file:
 ```js
 var schemaValidator = require("goabela-schema-validator")
 ```
