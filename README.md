@@ -36,6 +36,7 @@ The `err` variable will contain an object with all the errors that the body has.
 
 ## Examples
 
+`schema.json`:
 ```json
 {
   "userId": {
@@ -48,3 +49,5 @@ The `err` variable will contain an object with all the errors that the body has.
   }
 }
 ```
+
+`app.js`:
