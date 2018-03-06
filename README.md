@@ -2,16 +2,16 @@
 
 This module can validate the request's payload and body by using a schema JSON file.
 
-## Installation
+## Installing the package
 ```sh
 $ npm install goabela-schema-validator --save
 ```
 
-## API
+## Importing the module
 ```js
 var schemaValidator = require("goabela-schema-validator")
 ```
-
+## API
 ### schemaValidator.validate()
 The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
