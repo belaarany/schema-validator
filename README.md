@@ -54,7 +54,7 @@ The `schema.json` file:
   }
 }
 ```
-
+\
 The `app.js` file:
 
 ## License
