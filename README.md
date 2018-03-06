@@ -3,7 +3,7 @@
 This module can validate the request's payload and body by using a schema JSON file.
 
 ## Installation
-Install it by using the node package manager from the shell:
+Installation is done using the `npm install` in the shell:
 ```sh
 $ npm install goabela-schema-validator --save
 ```
