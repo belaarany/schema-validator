@@ -1,5 +1,5 @@
 
-# Validating request payload and body?
+# Validating request payload and body
 
 [![npm version](https://badge.fury.io/js/goabela-schema-validator.svg)](https://badge.fury.io/js/goabela-schema-validator)
 
@@ -37,9 +37,12 @@ schemaValidator.validate(body, schema)
 
 The `err` variable will contain an object with all the errors that the body has. You can check the possible errors at the [errors section](#errors).
 
-_For a full example please check the [example section](example)._
+_For a full example please check the [example section](#example)._
 
 ## Schema structure
+Available properties are:
+- `type`: The type of the element. Valid values are `string`, `number` and `array`.
+- `required`: Wether the given element is required or not. Can be `true` or `false`.
 
 ## Errors
 
