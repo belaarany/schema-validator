@@ -40,9 +40,25 @@ The `err` variable will contain an object with all the errors that the body has.
 _For a full example please check the [example section](#example)._
 
 ## Schema structure
-Available properties are:
-- `type`: The type of the element. Valid values are `string`, `number` and `array`.
-- `required`: Wether the given element is required or not. Can be `true` or `false`.
+### Properties
+The available properties are the followings (the one that marked with `*` is the default):
+- `type`: The type of the element. Valid values are `string`\*, `number` and `array`.
+- `required`: Wether the given element is required or not. Can be `true` or `false`\*.
+- `children`: The sub-elements.
+- `enum`: The list of the possible values colllected into an array.
+- `length`: The length settings of the element. Can have a `min` and a `max` value.
+- `range`: When the `type` is `number`, you can specify a range by adding `min` and `max`.
+- `test`: A regex script that you want to run on the given value.
+
+### Prototype
+```js
+{
+  "username": {
+    "type": "string",
+    "required": true
+  }
+}
+```
 
 ## Errors
 
