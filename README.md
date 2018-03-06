@@ -12,7 +12,7 @@ $ npm install goabela-schema-validator --save
 var schemaValidator = require("goabela-schema-validator")
 ```
 
-### schemaValidator.validate()
+### `schemaValidator.validate()`
 The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
 First you have to create a schema object. A good solution could be that creating a schema file such as `schema.json`.
