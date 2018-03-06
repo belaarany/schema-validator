@@ -10,7 +10,6 @@ $ npm install goabela-schema-validator --save
 ```
 <br />
 Import the module in your .js file:
-
 ```js
 var schemaValidator = require("goabela-schema-validator")
 ```
