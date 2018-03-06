@@ -30,11 +30,13 @@ schemaValidator.validate({schema}, {body})
   })
 ```
 
-The `err` variable will contain an object with all the errors that the body has. You can check the possible errors at the [errors](#errors) section.
+The `err` variable will contain an object with all the errors that the body has. You can check the possible errors at the [errors section](#errors).
+
+_For a full example please check the [example section](example)._
 
 ## Errors
 
-## Examples
+## Example
 
 The `schema.json` file:
 ```json
