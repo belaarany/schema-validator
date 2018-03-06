@@ -21,7 +21,7 @@ After that in the NodeJS file (e.g. under the Express controller), you can call 
 
 The prototype of the method:
 ```js
-schemaValidator.validate({schema}, {body})
+schemaValidator.validate(schema, body)
   .then(() => {
     // The body is OK
   })
