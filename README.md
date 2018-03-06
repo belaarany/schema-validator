@@ -1,6 +1,8 @@
 
 # Validating request payload and body
 
+[![npm version](https://badge.fury.io/js/goabela-schema-validator.svg)](https://badge.fury.io/js/goabela-schema-validator)
+
 This module can validate the request's payload and body by using a schema JSON file.
 
 ## Installation
