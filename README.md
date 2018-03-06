@@ -3,11 +3,13 @@
 This module can validate the request's payload and body by using a schema JSON file.
 
 ## Installation
+Install it by using the node package manager from the shell:
 ```sh
 $ npm install goabela-schema-validator --save
 ```
 
 ## API
+Import the module in your `.js` file:
 ```js
 var schemaValidator = require("goabela-schema-validator")
 ```
