@@ -91,7 +91,7 @@ _Error key: `invalidKeys`._
 
 If there are any keys in the body which are not in the schema, then this error will be returned.
 
-It will be an array which contains the missing keys with all its parents, for instance `born.date.foo`.
+It will be an array which contains the invalid keys with all its parents, for instance `born.date.foo`.
 
 ## Example
 
