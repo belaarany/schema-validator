@@ -17,7 +17,9 @@ var schemaValidator = require("goabela-schema-validator")
 ```
 
 ## Features
-### Validate (`schemaValidator.validate()`)
+### Validate
+_Prototype: `schemaValidator.validate()`_
+
 The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
 First you have to create a schema object. A good solution could be that creating a schema file such as `schema.json`.
@@ -63,7 +65,9 @@ The available properties are the followings:
 ## Errors
 By calling the `catch` on the `validate` function, you can get the errors.
 
-### Internal errors (`internalIssue`)
+### Internal errors
+Prototype: `internalIssue`
+
 The internal issues can be the followings:
 - `schemaNotSet`: The schema has not been set properly.
 - `bodyNotSet`: The body has not been set properly.
