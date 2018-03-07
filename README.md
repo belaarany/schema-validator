@@ -110,6 +110,24 @@ The `schema.json` file:
 ```
 \
 The `app.js` file:
+```js
+...
+var schemaValidator = require("goabela-schema-validator")
+var bodySchema = require("./schema.json")
+
+app.post("/user", (req, res) => {
+  schemaValidator.validate(req.body, bodySchema)
+    .then(() => {
+      // Do something
+    })
+    .catch(err => {
+      res.json({
+        "message": "The request body is not correct.",
+        "errors": err
+      })
+    })
+})
+```
 
 ## License
 [MIT](LICENSE)
