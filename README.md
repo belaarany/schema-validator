@@ -18,7 +18,7 @@ var schemaValidator = require("goabela-schema-validator")
 
 ## Features
 ### Validate
-_Prototype: `schemaValidator.validate()`._
+_Method: `schemaValidator.validate()`._
 
 The `validate` method will do the validation. It will return a promise so you can call `then` and `catch` on the method. Required arguements are the body/payload as an object and the schema object.
 
@@ -65,8 +65,14 @@ The available properties are the followings:
 ## Errors
 By calling the `catch` on the `validate` function, you can get the errors.
 
+```js
+.catch(err => {
+  console.log(err) // Output: { "internalIssue": "schemaNotSet" }
+})
+```
+
 ### Internal errors
-_Prototype: `internalIssue`._
+_Error key: `internalIssue`._
 
 The internal issues can be the followings:
 - `schemaNotSet`: The schema has not been set properly.
@@ -74,14 +80,14 @@ The internal issues can be the followings:
 - `bodyNotEmpty`: The schema is empty which means no body should have been received, but it is not empty.
 
 ### Missing keys
-_Prototype: `missingKeys`._
+_Error key: `missingKeys`._
 
 If there are any keys which are required but the body has no such key, then this error will be returned.
 
 It will be an array which contains the missing keys with all its parents, for instance `born.date.year`.
 
 ### Invalid keys
-_Prototype: `invalidKeys`._
+_Error key: `invalidKeys`._
 
 If there are any keys in the body which are not in the schema, then this error will be returned.
 
