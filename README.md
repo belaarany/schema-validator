@@ -111,7 +111,8 @@ The `schema.json` file:
 \
 The `app.js` file:
 ```js
-...
+// Other part of the app.js
+
 var schemaValidator = require("goabela-schema-validator")
 var bodySchema = require("./schema.json")
 
