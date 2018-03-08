@@ -1,5 +1,5 @@
 // Importing the validator
-var schemaValidator = require("../lib/validator.js")
+var schemaValidator = require("./index.js")
 
 var schema = {
 

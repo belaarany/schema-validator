@@ -2,18 +2,22 @@
   "name": "goabela-schema-validator",
   "version": "0.1.9",
   "description": "This module can validate the request's payload and body by using a schema JSON file.",
-  "main": "lib/validator.js",
+  "main": "index.js",
   "files": [
-    "lib/validator.js"
+    "README.md",
+    "index.js"
   ],
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/validator.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belaarany/schema-validator.git"
   },
-  "author": "Bela Arany @belaarany",
+  "author": {
+    "name": "Bela Arany",
+    "email": "bela.arany@goabela.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/belaarany/schema-validator/issues"
