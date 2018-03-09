@@ -48,6 +48,12 @@ function validate(body, schema) {
 			reject(tempErr)
 		}
 
+		// Now checking the types
+		let invalidTypes = lookupInvalidTypes(body, schema)
+		if(invalidTypes.length > 0) {
+			reject({invalidTypes})
+		}
+
 		resolve()
 	})
 }
@@ -102,6 +108,7 @@ function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 		// Checking if it is in the schema or not
 		if (key in schema == false) {
 			invalidKeys.push(currKey)
+			continue
 		}
 
 		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
@@ -115,6 +122,70 @@ function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 	return invalidKeys
 }
 
+function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
+
+	// Adding a dot to the previous keys as a seperator
+	prevKey = prevKey == null ? "" : (prevKey + ".")
+
+	for (let key in body) {
+
+		// Declaring the current ky by adding the for's key to the previous keys
+		currKey = prevKey + key
+
+		// Skipping if it has children
+		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
+			invalidKeys = lookupInvalidTypes(body[key], schema[key].children, currKey, invalidTypes)
+			continue
+		}
+
+		// Validating the type
+		if (body[key].type === false) {
+			body[key].type = "string"
+			// If `type` does not set then the default type will be `string`
+		}
+		
+		let currExpectedType = schema[key].type
+		//currType.toLowerCase()
+		switch (currExpectedType) {
+
+			// String
+			case "string":
+			case "str": {
+				if (typeof body[key] !== "string") {
+					invalidTypes.push({
+						"key": currKey,
+						"expected": currExpectedType,
+						"received": typeof body[key]
+					})
+				}
+				break;
+			}
+
+			// Number
+			case "number":
+			case "num":
+			case "integer":
+			case "int":
+			case "numeric": {
+				if (typeof body[key] !== "number") {
+					invalidTypes.push({
+						"key": currKey,
+						"expected": currExpectedType,
+						"received": typeof body[key]
+					})
+				}
+				break;
+			}
+
+			// Default
+			default: {				
+				break;
+			}
+		}
+	}
+
+	return invalidTypes
+}
 
 
 
