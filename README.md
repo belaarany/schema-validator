@@ -44,12 +44,12 @@ _For a full example please check the [example section](#example)._
 ## Schema structure
 ### Properties
 The available properties are the followings:
-- `type`: The type of the element. Valid values are `string`, `number`, `float` and `array`. Default is `string`.
+- `type`: The type of the element. Valid values are `string`, `number` and `array`. Default is `string`.
 - `required`: Wether the given element is required or not. Can be `true` or `false`. Default is `false`.
 - `children`: The sub-elements.
-- `enum`: The list of the possible values collected into an array.
-- `length`: The length settings of the element. Can have a `min` and a `max` value.
-- `range`: When the `type` is `number`, you can specify a range by adding `min` and `max`.
+- ~`enum`~: The list of the possible values collected into an array.
+- ~`length`~: The length settings of the element. Can have a `min` and a `max` value.
+- ~`range`~: When the `type` is `number`, you can specify a range by adding `min` and `max`.
 - `test`: A regex script that you want to run on the given value.
 
 ### Prototype

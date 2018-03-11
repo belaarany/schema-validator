@@ -141,21 +141,21 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			// If `type` does not set then the default type will be `string`
 		}
 
-		let currExpectedType = schema[key].type
+		let currExpectedType = schema[key].type || "string"
 		//currType.toLowerCase()
 		switch (currExpectedType) {
 
-			// String
+			// String (default)
 			case "string":
 			case "str": {
 				if (typeof body[key] !== "string") {
 					invalidTypes.push({
 						"key": currKey,
-						"expected": currExpectedType,
+						"expected": "string",
 						"received": typeof body[key]
 					})
 				}
-				break;
+				break
 			}
 
 			// Number
@@ -167,16 +167,29 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 				if (typeof body[key] !== "number") {
 					invalidTypes.push({
 						"key": currKey,
-						"expected": currExpectedType,
+						"expected": "number",
 						"received": typeof body[key]
 					})
 				}
-				break;
+				break
+			}
+
+			// Array
+			case "array":
+			case "list": {
+				if (Array.isArray(body[key]) == false) {
+					invalidTypes.push({
+						"key": currKey,
+						"expected": "array",
+						"received": typeof body[key]
+					})
+				}
+				break
 			}
 
 			// Default
-			default: {				
-				break;
+			default: {
+
 			}
 		}
 	}
