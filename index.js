@@ -60,15 +60,11 @@ function validate(body, schema) {
 
 function lookupMissingKeys(body, schema, prevKey = null, missingKeys = []) {
 
-	// Adding a dot to the previous keys as a seperator
 	prevKey = prevKey == null ? "" : (prevKey + ".")
-
-	// Current key
 	let currKey = null;
 
 	for (let key in schema) {
 
-		// Declaring the current ky by adding the for's key to the previous keys
 		currKey = prevKey + key
 
 		// Checking wether it is required
@@ -81,28 +77,22 @@ function lookupMissingKeys(body, schema, prevKey = null, missingKeys = []) {
 		}
 
 		// Checking if has children
-		if ("children" in schema[key]) {
+		if ("children" in schema[key] && body[key]) {
 
-			// Looping through the children as well
 			missingKeys = lookupMissingKeys(body[key], schema[key].children, currKey, missingKeys)
 		}
 	}
 
-	// Returning the `missingKeys` list
 	return missingKeys
 }
 
 function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 
-	// Adding a dot to the previous keys as a seperator
 	prevKey = prevKey == null ? "" : (prevKey + ".")
-
-	// Current key
 	let currKey = null;
 
 	for (let key in body) {
 
-		// Declaring the current ky by adding the for's key to the previous keys
 		currKey = prevKey + key
 
 		// Checking if it is in the schema or not
@@ -113,27 +103,34 @@ function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 
 		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
 
-			// Looping through the children as well
 			invalidKeys = lookupInvalidKeys(body[key], schema[key].children, currKey, invalidKeys)
 		}
 	}
 
-	// Returning the `invalidKeys` list
 	return invalidKeys
 }
 
 function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 
-	// Adding a dot to the previous keys as a seperator
 	prevKey = prevKey == null ? "" : (prevKey + ".")
+	let currKey = null;
 
 	for (let key in body) {
 
-		// Declaring the current ky by adding the for's key to the previous keys
 		currKey = prevKey + key
 
-		// Skipping if it has children
-		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
+		// Checking if schema has children but body not
+		if ("children" in schema[key] && typeof body[key] !== "object") {
+			invalidTypes.push({
+				"key": currKey,
+				"expected": "child",
+				"received": "value"
+			})
+			continue
+		}
+
+		// Looping the child
+		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {			
 			invalidKeys = lookupInvalidTypes(body[key], schema[key].children, currKey, invalidTypes)
 			continue
 		}
@@ -143,7 +140,7 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			body[key].type = "string"
 			// If `type` does not set then the default type will be `string`
 		}
-		
+
 		let currExpectedType = schema[key].type
 		//currType.toLowerCase()
 		switch (currExpectedType) {
