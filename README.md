@@ -50,7 +50,7 @@ The available properties are the followings:
 - ~`enum`~: The list of the possible values collected into an array.
 - ~`length`~: The length settings of the element. Can have a `min` and a `max` value.
 - ~`range`~: When the `type` is `number`, you can specify a range by adding `min` and `max`.
-- `test`: A regex script that you want to run on the given value.
+- ~`test`~: A regex script that you want to run on the given value.
 
 ### Prototype
 ```js
