@@ -29,7 +29,8 @@ var schema = {
 						type: "number"
 					},
 					month: {
-						type: "string"
+						type: "string",
+						enum: ["Jan", "Feb", "Marc"]
 					},
 					day: {
 						type: "number"
