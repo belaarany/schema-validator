@@ -231,6 +231,20 @@ function lookupOptionalProperties(body, schema, prevKey = null, issues = {}) {
 			}
 		}
 
+		// Checking the length
+		/*
+		 * Prototype:
+		 * "length": {
+		 * 	"min": 10,
+		 * 	"max": 30
+		 * }
+		 * or
+		 * "length": [10, 30] --> NOT YET DONE
+		 */
+		if ("length" in schema[key]) {
+
+		}
+
 
 		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
 
@@ -242,7 +256,7 @@ function lookupOptionalProperties(body, schema, prevKey = null, issues = {}) {
 }
 
 // As the `enum` argument is reserved word, I'm using `enumm` instead
-function checkEnum(enumm, received, into) {
+function checkEnum(enumm, received) {
 
 	if (enumm.indexOf(received) == -1) {
 		return {
@@ -253,6 +267,10 @@ function checkEnum(enumm, received, into) {
 	else {
 		return null
 	}
+}
+
+function checkLength(length, received) {
+
 }
 
 
