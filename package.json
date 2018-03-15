@@ -1,6 +1,6 @@
 {
   "name": "goabela-schema-validator",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "This module can validate the request's payload and body by using a schema JSON file.",
   "main": "index.js",
   "files": [
