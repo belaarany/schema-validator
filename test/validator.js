@@ -71,6 +71,6 @@ schemaValidator.validate(body, schema)
 		console.log("No issue")
 	})
 	.catch(err => {
-		console.log("Total issues")
-		console.log(err)
+		console.log("Total issues:")
+		console.log(JSON.stringify(err))
 	})
