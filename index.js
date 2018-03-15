@@ -50,8 +50,14 @@ function validate(body, schema) {
 
 		// Now checking the types
 		let invalidTypes = lookupInvalidTypes(body, schema)
-		if(invalidTypes.length > 0) {
+		if (invalidTypes.length > 0) {
 			reject({invalidTypes})
+		}
+
+		// Looping again to check the enum, length, range and test pattern
+		let optionalPropertiesIssues = lookupOptionalProperties(body, schema)
+		if (Object.keys(optionalPropertiesIssues).length > 0) {
+			reject(optionalPropertiesIssues)
 		}
 
 		resolve()
@@ -61,7 +67,7 @@ function validate(body, schema) {
 function lookupMissingKeys(body, schema, prevKey = null, missingKeys = []) {
 
 	prevKey = prevKey == null ? "" : (prevKey + ".")
-	let currKey = null;
+	let currKey = null
 
 	for (let key in schema) {
 
@@ -89,7 +95,7 @@ function lookupMissingKeys(body, schema, prevKey = null, missingKeys = []) {
 function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 
 	prevKey = prevKey == null ? "" : (prevKey + ".")
-	let currKey = null;
+	let currKey = null
 
 	for (let key in body) {
 
@@ -113,7 +119,7 @@ function lookupInvalidKeys(body, schema, prevKey = null, invalidKeys = []) {
 function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 
 	prevKey = prevKey == null ? "" : (prevKey + ".")
-	let currKey = null;
+	let currKey = null
 
 	for (let key in body) {
 
@@ -197,7 +203,57 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 	return invalidTypes
 }
 
+function lookupOptionalProperties(body, schema, prevKey = null, issues = {}) {
 
+	prevKey = prevKey == null ? "" : (prevKey + ".")
+	let currKey = null
+
+	for (let key in body) {
+
+		currKey = prevKey + key
+
+		// Checking for enum
+		if ("enum" in schema[key]) {
+
+			// Checking the enum	
+			let tempIssue = checkEnum(schema[key].enum, body[key])
+
+			// If invalid
+			if (tempIssue) {
+
+				// Checking if the `enum` key is set or not
+				if ("enum" in issues == false) {
+					issues.enum = []
+				}
+
+				// Then adding the current issue
+				issues.enum.push(tempIssue)
+			}
+		}
+
+
+		if (typeof body[key] === "object" && Array.isArray(body[key]) == false) {
+
+			issues = lookupOptionalProperties(body[key], schema[key].children, currKey, issues)
+		}
+	}
+
+	return issues
+}
+
+// As the `enum` argument is reserved word, I'm using `enumm` instead
+function checkEnum(enumm, received, into) {
+
+	if (enumm.indexOf(received) == -1) {
+		return {
+			"received": received,
+			"enum": enumm
+		}
+	}
+	else {
+		return null
+	}
+}
 
 
 /*Array.prototype.myEach = function(callback) {
