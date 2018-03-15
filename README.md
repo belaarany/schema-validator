@@ -130,5 +130,10 @@ app.post("/user", (req, res) => {
 })
 ```
 
+## TO-DOs
+- [x] Migrating the script from my app into a single node package.
+- [] Creating all the features stated above.
+- [] Migrating the validator core loops into iterators.
+
 ## License
 [MIT](LICENSE)
