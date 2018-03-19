@@ -93,7 +93,7 @@ describe("GOabela Schema Validator", () => {
 
 		return schemaValidator.validate(body, schema)
 		.then(() => {
-			assert.fail(0, 1, "Should have throwned an Error")
+			assert.fail(0, 1, "Should have thrown an Error")
 		})
 		.catch(err => {
 			assert.property(err, "invalidKeys")
