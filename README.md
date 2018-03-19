@@ -131,8 +131,8 @@ app.post("/user", (req, res) => {
 ```
 
 ## TO-DOs
-- ~Migrating the script from my app into a single node package.~
-- ~Deploying unit-testing.~
+- ~Migrating the script from my app into a single node package.~ :heavy_check_mark:
+- ~Deploying unit-testing.~ :heavy_check_mark:
 - Creating all the features stated above.
 - Migrating the validator core loops into iterators.
 
