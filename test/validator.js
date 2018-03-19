@@ -26,7 +26,8 @@ describe("GOabela Schema Validator", () => {
 						type: "string"
 					},
 					first: {
-						type: "string"
+						type: "string",
+						required: true
 					},
 					nick: {
 						type: "string"
@@ -107,6 +108,24 @@ describe("GOabela Schema Validator", () => {
 		})
 		.catch(err => {
 			assert.property(err, "invalidKeys")
+		})
+	})
+
+	// Testing for `missingKey` error
+	it("Should throw MissingKey Error", () => {
+
+		// Adding extra keys to the schema
+		schema.requiredTest1 = { type: "string", required: true }
+		schema.requiredTest2 = { type: "string", required: false }
+		schema.requiredTest3 = { children: { subItem: { type: "string", required: true } } }
+
+		return schemaValidator.validate(body, schema)
+		.then(() => {
+			assert.fail(0, 1, "Should have thrown an Error")
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err))
+			assert.property(err, "missingKeys")
 		})
 	})
 })
