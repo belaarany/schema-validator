@@ -107,7 +107,8 @@ describe("GOabela Schema Validator", () => {
 			assert.fail(0, 1, "Should have thrown an Error")
 		})
 		.catch(err => {
-			assert.property(err, "invalidKeys")
+			assert.property(err, "invalidKeys")//please use sub property test on the temp key
+			
 		})
 	})
 
