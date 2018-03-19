@@ -131,9 +131,18 @@ app.post("/user", (req, res) => {
 ```
 
 ## TO-DOs
-- [x] Migrating the script from my app into a single node package.
-- [ ] Creating all the features stated above.
-- [ ] Migrating the validator core loops into iterators.
+- ~Migrating the script from my app into a single node package.~
+- ~Deploying unit-testing.~
+- Creating all the features stated above.
+- Migrating the validator core loops into iterators.
+
+## Tests
+Test files are located in the `test` directory.
+
+Use the `test` `npm` script to run the tests:
+```sh
+$ npm run test
+```
 
 ## License
 [MIT](LICENSE)
