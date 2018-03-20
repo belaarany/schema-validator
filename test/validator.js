@@ -49,7 +49,8 @@ describe("GOabela Schema Validator", () => {
 								enum: ["Jan", "Feb", "Marc"]
 							},
 							day: {
-								type: "number"
+								type: "number",
+								required: true
 							}
 						}
 					}
@@ -110,7 +111,7 @@ describe("GOabela Schema Validator", () => {
 			assert.property(err, "invalidKeys")
 			expect(err.invalidKeys).to.be.an.instanceof(Array)
 			expect(err.invalidKeys).to.have.lengthOf(1)
-			expect(err.invalidKeys[0]).to.not.be.undefined
+
 			expect(err.invalidKeys[0]).to.equal("testingForInvalidKey")
 		})
 	})
@@ -121,15 +122,21 @@ describe("GOabela Schema Validator", () => {
 		// Adding extra keys to the schema
 		schema.requiredTest1 = { type: "string", required: true }
 		schema.requiredTest2 = { type: "string", required: false }
-		schema.requiredTest3 = { children: { subItem: { type: "string", required: true } } }
+		schema.requiredTest3 = { children: { subItem3: { type: "string", required: true } } }
+		schema.requiredTest4 = { children: { subItem4: { children: { subSubItem4: { type: "string", required: true } } } } }
 
 		return schemaValidator.validate(body, schema)
 		.then(() => {
 			assert.fail(0, 1, "Should have thrown an Error")
 		})
 		.catch(err => {
-			console.log(JSON.stringify(err))
 			assert.property(err, "missingKeys")
+			expect(err.missingKeys).to.be.an.instanceof(Array)
+			expect(err.missingKeys).to.have.lengthOf(3)
+
+			expect(err.missingKeys[0]).to.equal("requiredTest1")
+			expect(err.missingKeys[1]).to.equal("requiredTest3.subItem3")
+			expect(err.missingKeys[2]).to.equal("requiredTest4.subItem4.subSubItem4")
 		})
 	})
 })

@@ -77,15 +77,15 @@ function lookupMissingKeys(body, schema, prevKey = null, missingKeys = []) {
 		if (schema[key].required == true) {
 
 			// Checking wether it is in the body
-			if (key in body == false) {
+			if (body === null || key in body == false) {
 				missingKeys.push(currKey)
 			}
 		}
 
 		// Checking if has children
-		if ("children" in schema[key] && body[key]) {
+		if ("children" in schema[key]) {
 
-			missingKeys = lookupMissingKeys(body[key], schema[key].children, currKey, missingKeys)
+			missingKeys = lookupMissingKeys((body === null ? null : (key in body ? body[key] : null)), schema[key].children, currKey, missingKeys)
 		}
 	}
 
