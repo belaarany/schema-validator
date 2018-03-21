@@ -116,7 +116,10 @@ describe("GOabela Schema Validator", () => {
 				assert.fail(0, 1, "Should have thrown an Error")
 			})
 			.catch(err => {
-				assert.property(err, "invalidKeys")
+				expect(err).to.be.an.instanceof(Object)
+				expect(Object.keys(err).length).to.equal(1)
+				expect(err).to.have.property("invalidKeys")
+
 				expect(err.invalidKeys).to.be.an.instanceof(Array)
 				expect(err.invalidKeys).to.have.lengthOf(4)
 
@@ -141,7 +144,10 @@ describe("GOabela Schema Validator", () => {
 				assert.fail(0, 1, "Should have thrown an Error")
 			})
 			.catch(err => {
-				assert.property(err, "missingKeys")
+				expect(err).to.be.an.instanceof(Object)
+				expect(Object.keys(err).length).to.equal(1)
+				expect(err).to.have.property("missingKeys")
+
 				expect(err.missingKeys).to.be.an.instanceof(Array)
 				expect(err.missingKeys).to.have.lengthOf(3)
 
@@ -168,6 +174,8 @@ describe("GOabela Schema Validator", () => {
 				assert.fail(0, 1, "Should have thrown an Error")
 			})
 			.catch(err => {
+				expect(err).to.be.an.instanceof(Object)
+				expect(Object.keys(err).length).to.equal(1)
 				expect(err).to.have.property("invalidTypes")
 
 				expect(err.invalidTypes).to.be.an.instanceof(Array)
