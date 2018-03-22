@@ -3,35 +3,20 @@ module.exports.validate = function(body, schema) {
 }
 
 function validate(body, schema) {
-	return new Promise((resolve, reject) => {
-		
+	return new Promise((resolve, reject) => {		
+
+		// Checking if the `body` is set
+		if (body == null || getType(body) != "object" || Object.keys(body).length <= 0) {
+			reject({
+				"internalIssue": "bodyNotSet"
+			})
+		}		
 
 		// Checking if the `schema` is set
-		if (schema == null || typeof schema != "object") {
+		if (schema == null || getType(schema) != "object" || Object.keys(schema).length <= 0) {
 			reject({
 				"internalIssue": "schemaNotSet"
 			})
-		}
-
-		// Checking if the schema is not empty so `body` should have value
-		if (Object.keys(schema).length > 0) {
-			// Checking if the `body` is set
-			if (body == null || Object.keys(body).length <= 0) {
-				reject({
-					"internalIssue": "bodyNotSet"
-				})
-			}
-		}
-		// If so then body should be empty as well
-		else {
-			if (Object.keys(body).length > 0) {
-				reject({
-					"internalIssue": "bodyNotEmpty"
-				})
-			}
-			else {
-				reject(null)
-			}
 		}
 
 		// As the next-step we are going to loop through all the keys and children
@@ -154,11 +139,11 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			// String (default)
 			case "string":
 			case "str": {
-				if (typeof body[key] !== "string") {
+				if (getType(body[key]) != "string") {
 					invalidTypes.push({
 						"key": currKey,
 						"expected": "string",
-						"received": typeof body[key]
+						"received": getType(body[key])
 					})
 				}
 				break
@@ -170,11 +155,11 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			case "integer":
 			case "int":
 			case "numeric": {
-				if (typeof body[key] !== "number") {
+				if (getType(body[key]) != "number") {
 					invalidTypes.push({
 						"key": currKey,
 						"expected": "number",
-						"received": typeof body[key]
+						"received": getType(body[key])
 					})
 				}
 				break
@@ -183,11 +168,11 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			// Array
 			case "array":
 			case "list": {
-				if (Array.isArray(body[key]) == false) {
+				if (getType(body[key]) != "array") {
 					invalidTypes.push({
 						"key": currKey,
 						"expected": "array",
-						"received": typeof body[key]
+						"received": getType(body[key])
 					})
 				}
 				break
@@ -271,6 +256,33 @@ function checkEnum(enumm, received) {
 
 function checkLength(length, received) {
 
+}
+
+function getType(arg) {
+
+	switch (typeof arg) {
+
+		case "string": {
+			return "string"
+		}
+
+		case "number": {
+			return "number"
+		}
+
+		case "object":
+		case "array": {
+
+			// Checking if it is array or real object
+			if (Array.isArray(arg) == true) {
+				return "array"
+			}
+			else {
+				return "object"
+			}
+		}
+
+	}	
 }
 
 
