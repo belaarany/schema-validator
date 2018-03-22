@@ -161,13 +161,15 @@ describe("GOabela Schema Validator", () => {
 	// Type tests
 	describe("Type tests", () => {
 
-		it("Should expect `string` instead of `number`", () => {
+		it("Should expect `string` instead of `number` and `array`", () => {
 
 			// Setting up invalid types
-			body.invalidType1 = 123
-			schema.invalidType1 = { type: "string" }
-			body.invalidType2 = { subItem2: { subSubItem2: 47576458 } }
-			schema.invalidType2 = { children: { subItem2: { children: { subSubItem2: { type: "string" } } } } }
+
+			body.testWithNumber = { subItem: { subSubItem: 47576458 } }
+			schema.testWithNumber = { children: { subItem: { children: { subSubItem: { type: "string" } } } } }
+
+			body.testWithArray = { subItem: [ "one", "two", "three" ] }
+			schema.testWithArray = { children: { subItem: { type: "string" } } }
 
 			return schemaValidator.validate(body, schema)
 			.then(() => {
@@ -181,12 +183,74 @@ describe("GOabela Schema Validator", () => {
 				expect(err.invalidTypes).to.be.an.instanceof(Array)
 				expect(err.invalidTypes).to.have.lengthOf(2)
 
-				expect(err.invalidTypes[0].key).to.equal("invalidType1")
+				expect(err.invalidTypes[0].key).to.equal("testWithNumber.subItem.subSubItem")
 				expect(err.invalidTypes[0].expected).to.equal("string")
 				expect(err.invalidTypes[0].received).to.equal("number")
 
-				expect(err.invalidTypes[1].key).to.equal("invalidType2.subItem2.subSubItem2")
+				expect(err.invalidTypes[1].key).to.equal("testWithArray.subItem")
 				expect(err.invalidTypes[1].expected).to.equal("string")
+				expect(err.invalidTypes[1].received).to.equal("array")
+			})
+		})
+
+		it("Should expect `number` instead of `string` and `array`", () => {
+
+			// Setting up invalid types
+			body.testWithString = { subItem: { subSubItem: "two" } }
+			schema.testWithString = { children: { subItem: { children: { subSubItem: { type: "number" } } } } }
+
+			body.testWithArray = { subItem: [ "one", "two", "three" ] }
+			schema.testWithArray = { children: { subItem: { type: "number" } } }
+
+			return schemaValidator.validate(body, schema)
+			.then(() => {
+				assert.fail(0, 1, "Should have thrown an Error")
+			})
+			.catch(err => {
+				expect(err).to.be.an.instanceof(Object)
+				expect(Object.keys(err).length).to.equal(1)
+				expect(err).to.have.property("invalidTypes")
+
+				expect(err.invalidTypes).to.be.an.instanceof(Array)
+				expect(err.invalidTypes).to.have.lengthOf(2)
+
+				expect(err.invalidTypes[0].key).to.equal("testWithString.subItem.subSubItem")
+				expect(err.invalidTypes[0].expected).to.equal("number")
+				expect(err.invalidTypes[0].received).to.equal("string")
+
+				expect(err.invalidTypes[1].key).to.equal("testWithArray.subItem")
+				expect(err.invalidTypes[1].expected).to.equal("number")
+				expect(err.invalidTypes[1].received).to.equal("array")
+			})
+		})
+
+		it("Should expect `array` instead of `string` and `number`", () => {
+
+			// Setting up invalid types
+			body.testWithString = { subItem: { subSubItem: "two" } }
+			schema.testWithString = { children: { subItem: { children: { subSubItem: { type: "array" } } } } }
+
+			body.testWithNumber = { subItem: 123 }
+			schema.testWithNumber = { children: { subItem: { type: "array" } } }
+
+			return schemaValidator.validate(body, schema)
+			.then(() => {
+				assert.fail(0, 1, "Should have thrown an Error")
+			})
+			.catch(err => {
+				expect(err).to.be.an.instanceof(Object)
+				expect(Object.keys(err).length).to.equal(1)
+				expect(err).to.have.property("invalidTypes")
+
+				expect(err.invalidTypes).to.be.an.instanceof(Array)
+				expect(err.invalidTypes).to.have.lengthOf(2)
+
+				expect(err.invalidTypes[0].key).to.equal("testWithString.subItem.subSubItem")
+				expect(err.invalidTypes[0].expected).to.equal("array")
+				expect(err.invalidTypes[0].received).to.equal("string")
+
+				expect(err.invalidTypes[1].key).to.equal("testWithNumber.subItem")
+				expect(err.invalidTypes[1].expected).to.equal("array")
 				expect(err.invalidTypes[1].received).to.equal("number")
 			})
 		})
