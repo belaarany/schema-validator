@@ -290,7 +290,7 @@ describe("Property tests", () => {
 
 	it("Should be out of enum", () => {
 
-		// Settung up a out-of-enum body property
+		// Setting up a out-of-enum body property
 		body.born.date.month = "Apr"
 
 		return schemaValidator.validate(body, schema)
