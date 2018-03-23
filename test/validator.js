@@ -285,3 +285,32 @@ describe("Type tests", () => {
 		})
 	})
 })
+
+describe("Property tests", () => {
+
+	it("Should be out of enum", () => {
+
+		// Settung up a out-of-enum body property
+		body.born.date.month = "Apr"
+
+		return schemaValidator.validate(body, schema)
+		.then(() => {
+			assert.fail(0, 1, "Should have thrown an Error")
+		})
+		.catch(err => {
+			console.log(err)
+
+			expect(err).to.be.an.instanceof(Object)
+			expect(Object.keys(err).length).to.equal(1)
+			expect(err).to.have.property("outOfEnum")
+
+			expect(err.outOfEnum).to.be.an.instanceof(Array)
+			expect(err.outOfEnum).to.have.lengthOf(1)
+
+			expect(err.outOfEnum[0].key).to.equal("born.date.month")
+			expect(err.outOfEnum[0].received).to.equal("Apr")
+			expect(err.outOfEnum[0]).to.have.property("enum")
+			expect(err.outOfEnum[0].enum).to.be.an.instanceof(Array)
+		})
+	})
+})

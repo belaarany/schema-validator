@@ -93,6 +93,18 @@ If there are any keys in the body which are not in the schema, then this error w
 
 It will be an array which contains the invalid keys with all its parents, for instance `born.date.foo`.
 
+### Invalid types
+_Error key: `invalidTypes`._
+
+This error object will be returned once there are any type errors.
+
+For instance, in the schema if you set type of `year` to be `number`, and the body's key has different type, then this error will be returned.
+
+### Out of enum
+_Error key: `outOfEnum`._
+
+If you set an enum on a property, the validator will force the body's value to be one of the enum's value.
+
 ## Example
 
 The `schema.json` file:

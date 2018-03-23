@@ -201,18 +201,18 @@ function lookupOptionalProperties(body, schema, prevKey = null, issues = {}) {
 		if ("enum" in schema[key]) {
 
 			// Checking the enum	
-			let tempIssue = checkEnum(schema[key].enum, body[key])
+			let tempIssue = checkEnum(schema[key].enum, body[key], currKey)
 
 			// If invalid
 			if (tempIssue) {
 
 				// Checking if the `enum` key is set or not
-				if ("enum" in issues == false) {
-					issues.enum = []
+				if ("outOfEnum" in issues == false) {
+					issues.outOfEnum = []
 				}
 
 				// Then adding the current issue
-				issues.enum.push(tempIssue)
+				issues.outOfEnum.push(tempIssue)
 			}
 		}
 
@@ -241,10 +241,11 @@ function lookupOptionalProperties(body, schema, prevKey = null, issues = {}) {
 }
 
 // As the `enum` argument is reserved word, I'm using `enumm` instead
-function checkEnum(enumm, received) {
+function checkEnum(enumm, received, key) {
 
 	if (enumm.indexOf(received) == -1) {
 		return {
+			"key": key,
 			"received": received,
 			"enum": enumm
 		}
