@@ -126,7 +126,7 @@ function lookupInvalidTypes(body, schema, prevKey = null, invalidTypes = []) {
 			continue
 		}
 
-		// Validating the type
+		// Validating type
 		if (body[key].type === false) {
 			body[key].type = "string"
 			// If `type` does not set then the default type will be `string`
