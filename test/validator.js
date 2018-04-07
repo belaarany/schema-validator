@@ -298,7 +298,7 @@ describe("Property tests", () => {
 			assert.fail(0, 1, "Should have thrown an Error")
 		})
 		.catch(err => {
-			expect(err).to.be.éan.instanceof(Object)
+			expect(err).to.be.an.instanceof(Object)
 			expect(Object.keys(err).length).to.equal(1)
 			expect(err).to.have.property("outOfEnum")
 
